@@ -48,6 +48,31 @@ Siga os passos abaixo para configurar o ambiente e executar o projeto.
     ```
     > **Nota**: A instalação da biblioteca `PyAudio` pode falhar em alguns sistemas. Se isso ocorrer, consulte guias de instalação específicos para seu sistema operacional (pode ser necessário instalar o "PortAudio" no Linux ou "Visual C++ Build Tools" no Windows).
 
+## 🐳 Instalação com Docker (Alternativa)
+
+Se você tem o Docker instalado, pode construir e executar o projeto em um contêiner, evitando a necessidade de instalar Python ou dependências manualmente no seu sistema.
+
+1.  **Construa a imagem Docker:**
+    Na raiz do projeto, execute o comando abaixo. Isso pode levar alguns minutos na primeira vez.
+    ```bash
+    docker build -t jarvis-app .
+    ```
+
+2.  **Execute o contêiner:**
+
+    *   **Modo Assistente de Voz:**
+        Para usar o microfone e os alto-falantes do seu computador, você precisa expô-los ao contêiner. O comando abaixo funciona na maioria dos sistemas Linux.
+        ```bash
+        docker run -it --rm --device /dev/snd:/dev/snd jarvis-app
+        ```
+        > **Nota**: A configuração de áudio para Docker no Windows e macOS pode ser mais complexa e exigir configurações adicionais.
+
+    *   **Modo de Transcrição de Áudio:**
+        Para transcrever um arquivo, você precisa montar a pasta `audios` no contêiner.
+        ```bash
+        docker run --rm -v "$(pwd)/audios:/app/audios" jarvis-app nome_do_arquivo.m4a
+        ```
+
 ## ⚙️ Como Usar
 
 O script pode ser executado de duas maneiras:
