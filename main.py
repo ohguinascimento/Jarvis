@@ -28,6 +28,7 @@ def talk(text):
     engine.runAndWait()
 
 def take_command():
+    command = ""
     try:
         with sr.Microphone() as source: #inicia o microfone
             print('listen....') #imprime que esta escutando
@@ -35,20 +36,22 @@ def take_command():
             command = listener.recognize_google(voice, language='pt-BR') #fala o que foi dito
             command = command.lower() #deixa tudo em caixa alta
 
-    except:
-        pass
+    except sr.UnknownValueError:
+        print("Não entendi o que foi dito.")
+    except Exception as e:
+        print(f"Ocorreu um erro: {e}")
     return command
 
 def Repet_command():
+    command = ""
     try:
         with sr.Microphone() as source: #inicia o microfone
             print('listen....') #imprime que esta escutando
             voice = listener.listen(source) #salva o que foi dito
             command = listener.recognize_google(voice, language='pt-BR') #fala o que foi dito
             command = command.lower() #deixa tudo em caixa alta
-
-    except:
-        pass
+    except Exception as e:
+        print(f"Ocorreu um erro ao repetir comando: {e}")
     return command
 
 def run_jarvis():
