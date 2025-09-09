@@ -3,6 +3,9 @@ import subprocess
 import speech_recognition as sr #importa a biblioteca
 import pyttsx3
 import datetime
+import os
+from playsound import playsound
+
 
 listener = sr.Recognizer() #configurar reconhecimento
 engine = pyttsx3.init()
@@ -26,6 +29,18 @@ def ping(host):
 def talk(text):
     engine.say(text)
     engine.runAndWait()
+
+def play_response(filename):
+    """Toca um arquivo MP3 da pasta 'audios'."""
+    audio_path = os.path.join('audios', filename)
+    try:
+        if os.path.exists(audio_path):
+            playsound(audio_path)
+        else:
+            print(f"Arquivo de áudio não encontrado: {audio_path}")
+            talk("Desculpe, não encontrei o arquivo de áudio para essa resposta.")
+    except Exception as e:
+        print(f"Erro ao tocar o áudio: {e}")
 
 def take_command():
     command = ""
@@ -64,31 +79,31 @@ def run_jarvis():
         if 'que horas é' in command:
             talk("Parça agora é  " + str(datetime.datetime.now().strftime('%I:%M ')))
         elif 'está bem' in command:
-            talk("Hoje esta suave na nave")
+            play_response("bem.mp3")
         elif 'ajusta os comandos' in command:
-            talk("Esta ajustado vamo com tudo")
+            play_response("ajustado.mp3")
         elif 'testar conexão'  in command:
-            talk("pra onde vamos pingar ?")
+            play_response("ping_para_onde.mp3")
             msg = Repet_command()
             print(msg)
             resposta = ping(msg)
 
             if resposta == True:
-                talk("Servidor online chefe")
+                play_response("servidor_online.mp3")
             else:
-                talk("Fudeou mano Caiu tudo")
+                play_response("servidor_offline.mp3")
         elif 'quem te fez' in command:
-            talk("O homem de ferro")
+            play_response("criador.mp3")
         elif 'sextou' in command:
-            talk("Dia de derrubar o servidor")
+            play_response("sextou.mp3")
         elif 'o tiago é' in command:
-            talk("Viadinho")
+            play_response("tiago.mp3")
         elif 'eu sou o homem de ferro' in command:
-            talk("não, o tony stark que é")
+            play_response("homem_de_ferro.mp3")
         elif 'a juliana é' in command:
-            talk("minhaaaa vidaaaa")
+            play_response("juliana.mp3")
         elif 'quem é você' in command:
-            talk("Sou Jarvis o assistente do homem de ferro")
+            play_response("quem_e_voce.mp3")
         else:
             print(command)
             talk("não econtrei nada com " + str(command))
